@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
+export `xargs <.env`
+
 set -e
 set -u
 
 SOURCE_FILE=$1
+
 
 # Get the Front Matter based on user input.
 getfrontmatter | tee .getfrontmattertemp
@@ -25,7 +28,6 @@ TITLE=`echo $RAW_TITLE \
 # Figure out where to save
 DATE=`date +"%Y-%m-%d"`
 FILENAME="$DATE-$TITLE-.md"
-BLOG_PATH=/Users/jeremygreer/code/reergymerej.github.io
 DESTINATION_FILE=$BLOG_PATH/_posts/$FILENAME
 
 cat .getfrontmattertemp $SOURCE_FILE > $DESTINATION_FILE
