@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-export `xargs <.env`
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+export `xargs <$SCRIPT_DIR/.env`
 
 set -e
 set -u
@@ -41,3 +43,4 @@ git commit -m "Add $RAW_TITLE"
 git pull
 git push
 popd
+
