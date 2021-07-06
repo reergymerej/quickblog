@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+set -e
+set -u
+
+SOURCE_FILE=$1
+
+# Get the Front Matter based on user input.
+getfrontmatter | tee .getfrontmattertemp
+sleep .1s
+sed -i "" "s/.*---/---/" .getfrontmattertemp
+
+# Get title from Front Matter
+RAW_TITLE=`grep title .getfrontmattertemp \
+  | sed "s/title:  //" \
+  | sed "s/\"//g"
+`
+TITLE=`echo $RAW_TITLE \
+  | tr '[:upper:]' '[:lower:]' \
+  | sed "s/ /-/g" \
+  | sed "s/[^a-z-]//g" \
+  | cut -c 1-23
+`
+
+# Figure out where to save
+DATE=`date +"%Y-%m-%d"`
+FILENAME="$DATE-$TITLE-.md"
+BLOG_PATH=/Users/jeremygreer/code/reergymerej.github.io
+DESTINATION_FILE=$BLOG_PATH/_posts/$FILENAME
+
+cat .getfrontmattertemp $SOURCE_FILE > $DESTINATION_FILE
+
+# Clean up
+rm .getfrontmattertemp
+
+pushd $BLOG_PATH
+git add _posts/$FILENAME
+git commit -m "Add $RAW_TITLE"
+git pull
+git push
+popd
