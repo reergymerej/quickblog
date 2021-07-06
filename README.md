@@ -3,7 +3,6 @@
 Use this to quickly add a blog entry.
 
 
-
 ## Setup
 
 Install node tool.
@@ -18,3 +17,5 @@ Add the path to your blog in `.env`
 
 ./main source-file.md
 
+
+This will show a couple prompts then create the file, commit, and publish.
