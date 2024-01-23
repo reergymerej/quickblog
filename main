@@ -12,7 +12,7 @@ SOURCE_FILE=$1
 
 # Get the Front Matter based on user input.
 getfrontmatter | tee .getfrontmattertemp
-sleep .1s
+sleep .1
 sed -i "" "s/.*---/---/" .getfrontmattertemp
 
 # Get title from Front Matter
